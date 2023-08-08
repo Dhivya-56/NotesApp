@@ -17,9 +17,9 @@ function CreateNote() {
       setNotes(newNotes);
       localStorage.setItem('notes', JSON.stringify(newNotes));
     }
-    if(title.trim() == ""   || content.trim() ==""){
-        alert("Please enter a title and content");
-    }
+    if(title.trim() == ""){
+      alert("Please enter a title");
+     }
   
   };
   useEffect(() => {
@@ -34,15 +34,18 @@ function CreateNote() {
 
   const handleEditNote = (index) => {
     setIsEditing(true);
-    setEditIndex(index);
+    setEditIndex(index); 
+    console.log(index)
     setTitle(notes[index].title);
     setContent(notes[index].content);
   };
 
   const handleSaveNote = () => {
+    setIsEditing(false);
     if (title.trim() !== "") {
       const newNotes = [...notes];
       newNotes[editIndex] = { title, content };
+      console.log({ title, content })
       setNotes(newNotes);
   
       setTitle("");
@@ -81,6 +84,7 @@ function CreateNote() {
       <ul>
         {notes.map((note, index) => (
           <li key={index}>
+            
             <h3>{note.title}</h3>
             <p>Time:{date.toLocaleTimeString()}</p>
             {/* {editIndex === index && (
